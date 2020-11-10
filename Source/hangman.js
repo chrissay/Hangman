@@ -3,6 +3,7 @@ class Hangman {
         this.word = word.toLowerCase().split('')
         this.remainingGuesses = remainingGuesses
         this.guessedLetters = []
+        this.wrongLetters = []
         this.status = 'Playing'
     }
     calculateStatus() {
@@ -15,6 +16,9 @@ class Hangman {
         } else {
             this.status = 'Playing'
         }
+    }
+    get wrongGuess() {
+        return `Wrong gueses: ${this.wrongLetters.join(', ')}`
     }
     get statusMessage() {
         if (this.status === 'Failed') {
@@ -53,6 +57,7 @@ class Hangman {
     
         if (isUnique && isBadGuess) {
             this.remainingGuesses--
+            this.wrongLetters = [...this.wrongLetters, guess.toUpperCase().split('')]
         }
     
         this.calculateStatus()

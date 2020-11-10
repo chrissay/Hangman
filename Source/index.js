@@ -2,17 +2,25 @@ import Hangman from './hangman'
 import getPuzzle from './requests'
 
 const puzzleEl = document.querySelector('#puzzle')
+const badGuessEl = document.querySelector('#guessed')
 const guessesEl = document.querySelector('#guesses')
 let game1
 
 window.addEventListener('keypress', (e) => {
     const guess = String.fromCharCode(e.charCode)
-    game1.makeGuess(guess)
-    render()
+    const guessCode = e.charCode
+
+    if (guessCode > 96 && guessCode < 123) {
+        game1.makeGuess(guess)
+        render()
+    } else {
+        return
+    }
 })
 
 const render = () => {
     puzzleEl.innerHTML = ''
+    badGuessEl.textContent = game1.wrongGuess
     guessesEl.textContent = game1.statusMessage
 
     game1.puzzle.split('').forEach((letter) => {
